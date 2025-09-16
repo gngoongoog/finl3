@@ -1,0 +1,62 @@
+
+/* Animations & smoky background */
+
+:root{
+  --smoke-opacity: 0.06;
+  --accent: rgba(99,102,241,0.08);
+}
+
+body, #root {
+  min-height: 100vh;
+  background: linear-gradient(180deg,#f8fafc 0%, #ffffff 60%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* subtle moving smoke layers */
+.smoke-layer {
+  position: absolute;
+  inset: -10% -20%;
+  background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.9), transparent 20%),
+                    radial-gradient(circle at 80% 70%, rgba(240,240,255,0.95), transparent 20%);
+  opacity: var(--smoke-opacity);
+  filter: blur(40px);
+  transform: scale(1.1);
+  animation: drift 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.smoke-layer.small{ opacity: calc(var(--smoke-opacity) * 0.6); filter: blur(30px); animation-duration: 28s; }
+.smoke-layer.mid{ opacity: calc(var(--smoke-opacity) * 0.9); filter: blur(36px); animation-duration: 22s; transform: scale(1.05); }
+
+@keyframes drift {
+  0% { transform: translateX(-5%) translateY(0) scale(1.05); }
+  50% { transform: translateX(5%) translateY(-3%) scale(1.08); }
+  100% { transform: translateX(-5%) translateY(0) scale(1.05); }
+}
+
+/* fade-in-up used by components */
+.animate-fade-in-up{
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeInUp 600ms ease forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes fadeInUp{
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* shadow pulse on hover */
+.shadow-pulse {
+  transition: box-shadow 300ms cubic-bezier(.2,.9,.2,1), transform 300ms cubic-bezier(.2,.9,.2,1);
+}
+.shadow-pulse:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(2,6,23,0.12), 0 8px 20px rgba(99,102,241,0.06);
+}
+
+/* small button micro interaction */
+.btn-interact { transition: transform 160ms ease, box-shadow 160ms ease; }
+.btn-interact:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(2,6,23,0.08); }
